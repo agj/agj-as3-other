@@ -26,8 +26,8 @@ package cl.agj.extra.math {
 		
 		/////
 		
-		protected var _length:uint;
-		public function get length():uint {
+		protected var _length:Number;
+		public function get length():Number {
 			return _length;
 		}
 		
