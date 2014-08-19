@@ -42,6 +42,10 @@ package cl.agj.extra.events {
 			return promesa;
 		}
 		
+		/**
+		 * Regardless of whether promises are resolved or rejected, when all promises in the passed array are finished, the returned
+		 * promise will be resolved. If a promise never finishes, this promise won't either.
+		 */
 		static public function allComplete(promises:Array):Promise {
 			var deferred:Deferred = new Deferred;
 			var remaining:int = promises.length;

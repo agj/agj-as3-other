@@ -16,12 +16,16 @@ package cl.agj.extra.math {
 			// x < (end - start) / step
 		}
 		
-		static public function from(start:Number):Range {
-			return new Range(start, Infinity);
+		static public function from(start:Number, step:Number = 1):Range {
+			return new Range(start, Infinity, step);
 		}
 		
-		static public function to(end:Number):Range {
-			return new Range(0, end);
+		static public function to(end:Number, step:Number = 1):Range {
+			return new Range(0, end, step);
+		}
+		
+		static public function between(start:Number, end:Number, step:Number = 1):Range {
+			return new Range(start, end, step);
 		}
 		
 		/////
@@ -66,6 +70,22 @@ package cl.agj.extra.math {
 			return result;
 		}
 		
+		/**
+		 * Allows for iteration on the Range's values with the passed callback function.
+		 * 
+		 * @param callback  Takes signature ´callback(value, index, range)´. Return the false value from it in order to break.
+		 * @return          The same Range object, unmodified.
+		 */
+		public function forEach(callback:Function):Range {
+			var argsNum:int = Math.max(callback.length, 1);
+			var i:int = 0;
+			for each (var v:Number in this) {
+				if (callback.apply(null, [v, i, this].slice(0, argsNum)) === false) break;
+				i++;
+			}
+			return this;
+		}
+		
 		/////
 		
 		override flash_proxy function nextNameIndex(index:int):int {
@@ -77,7 +97,7 @@ package cl.agj.extra.math {
 		}
 		
 		override flash_proxy function nextName(index:int):String {
-			throw new IllegalOperationError("Use 'for each' loops to iterate over arranges.");
+			throw new IllegalOperationError("Use 'for each..in' loops to iterate over Ranges.");
 		}
 		
 		/////
